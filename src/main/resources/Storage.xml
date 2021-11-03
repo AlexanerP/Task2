@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Storage>
+    <item id="1">
+        <type>Smoothing Iron</type>
+        <company>LG</company>
+        <name>S153.I8</name>
+        <price>19.9</price>
+        <countMode>5</countMode>
+        <maxTemperature>570</maxTemperature>
+    </item>
+    <item id="2">
+        <type>Refrigerator</type>
+        <company>Indesit</company>
+        <name>MAF 3000</name>
+        <price>1966.2</price>
+        <volumeFreezer>15</volumeFreezer>
+        <volumeNotFreezer>5</volumeNotFreezer>
+    </item>
+    <item id="3">
+        <type>Refrigerator</type>
+        <company>HOLAND</company>
+        <name>PIT 5478.S</name>
+        <price>300</price>
+        <volumeFreezer>25</volumeFreezer>
+        <volumeNotFreezer>15</volumeNotFreezer>
+    </item>
+    <item id="4">
+        <type>Smoothing Iron</type>
+        <company>LG</company>
+        <name>F35.S8-N1</name>
+        <price>59.9</price>
+        <countMode>3</countMode>
+        <maxTemperature>200</maxTemperature>
+    </item>
+</Storage>

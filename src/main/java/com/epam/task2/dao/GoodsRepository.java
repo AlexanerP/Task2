@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author Alexander Pishchala
  *
- * This is the product repository class. All products are stored here after receiving from the xml file.
+ * This is the goods repository class. All products are stored here after receiving from the xml file.
  */
 public class GoodsRepository {
 

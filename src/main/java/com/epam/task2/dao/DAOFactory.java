@@ -9,7 +9,7 @@ import com.epam.task2.dao.xml.UpdateXML;
 /**
  * @author Alexander Pishchala
  *
- * This is a ffbrika of the DAO package. Here we distribute instances of the DAO package classes.
+ * This is a fabrika of the DAO package. Here we distribute instances of the DAO package classes.
  */
 public class DAOFactory {
 

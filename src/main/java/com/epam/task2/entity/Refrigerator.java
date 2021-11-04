@@ -4,7 +4,15 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * @author Alexander Pishchala
+ *
+ * This class is the entity 'Refrigerator' and extends the 'Goods' class.
+ * Here are the main characteristics of a refrigerator type goods.
+ */
 public class Refrigerator extends Goods implements Serializable {
+
+    private static final long serialVersionUID = 5944837859751545777L;
 
     private double volumeFreezer;
     private double volumeNotFreezer;

@@ -1,5 +1,10 @@
 package com.epam.task2.service;
 
+/**
+ * @author Alexander Pishchala
+ *
+ * In this class, I check that the values​are valid and that their length does not exceed the specified values.
+ */
 public class Validator {
 
     private static final int MAX_TEXT_VALUE = 100;
@@ -8,7 +13,7 @@ public class Validator {
 
     public static boolean validatorText(String text) throws ServiceException{
         if(!(text.length() < MAX_TEXT_VALUE) && !(text.length() > MIN_TEXT_VALUE)) {
-            throw new ServiceException();
+            throw new ServiceException("Invalid value - " + text);
         }
         return true;
     }

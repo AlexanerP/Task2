@@ -5,6 +5,11 @@ import com.epam.task2.entity.Goods;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Alexander Pishchala
+ *
+ * This is the product repository class. All products are stored here after receiving from the xml file.
+ */
 public class GoodsRepository {
 
     private static GoodsRepository instance = new GoodsRepository();

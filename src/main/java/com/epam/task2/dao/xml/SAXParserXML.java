@@ -10,7 +10,12 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
 
-public class SAXParserXML {
+/**
+ * @author Alexander Pishchala
+ *
+ * This is the 'SAXParsingXML' class. It describes parsing a file.
+ */
+public final class SAXParserXML {
 
     private Constant constant = new Constant();
     private SAXHandlerParser handler = DAOFactory.getInstance().getHandler();

@@ -1,5 +1,10 @@
 package com.epam.task2.dao.xml;
 
+/**
+ * @author Alexander Pishchala
+ *
+ * This is the class for constants. The tags of the xml file and also the name of the xml file are described here.
+ */
 public class Constant {
 
     private final String FILE_NAME = "Storage.xml";

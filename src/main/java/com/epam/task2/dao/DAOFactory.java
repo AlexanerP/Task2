@@ -6,6 +6,11 @@ import com.epam.task2.dao.xml.SAXHandlerParser;
 import com.epam.task2.dao.xml.SAXParserXML;
 import com.epam.task2.dao.xml.UpdateXML;
 
+/**
+ * @author Alexander Pishchala
+ *
+ * This is a ffbrika of the DAO package. Here we distribute instances of the DAO package classes.
+ */
 public class DAOFactory {
 
     private static DAOFactory instance = new DAOFactory();

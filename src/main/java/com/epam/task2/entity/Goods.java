@@ -4,7 +4,14 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * @author Alexander Pishchala
+ *
+ * This is the 'Goods' entity class. The main characteristics of the product are described here.
+ */
 public class Goods implements Serializable {
+
+    private static final long serialVersionUID = -844735481467761896L;
 
     private long idGoods;
     private String name;

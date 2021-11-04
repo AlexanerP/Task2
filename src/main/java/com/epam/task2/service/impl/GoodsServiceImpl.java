@@ -3,7 +3,7 @@ package com.epam.task2.service.impl;
 import com.epam.task2.dao.DAOFactory;
 import com.epam.task2.dao.DAOGoods;
 import com.epam.task2.entity.Goods;
-import com.epam.task2.entity.criteria.Criteria;
+import com.epam.task2.entity.criteria.CriteriaSearch;
 import com.epam.task2.service.GoodsService;
 import com.epam.task2.service.ServiceException;
 import com.epam.task2.service.Validator;
@@ -14,6 +14,12 @@ import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * @author Alexander Pishchala
+ *
+ * This is the 'GoodsService' class. The implementation of the main methods of the 'GoodsService'
+ * interface is written here.
+ */
 public class GoodsServiceImpl implements GoodsService {
 
     private DAOGoods daoGoods;
@@ -23,14 +29,14 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public List<Goods> findGoods(Criteria criteria) {
+    public List<Goods> findGoods(CriteriaSearch criteriaSearch) {
         try {
-            if (!(criteria == null)) {
-                if(!criteria.getListSearchWord().isEmpty()) {
-                    return daoGoods.find(criteria);
+            if (!(criteriaSearch == null)) {
+                if(!criteriaSearch.getListSearchWord().isEmpty()) {
+                    return daoGoods.find(criteriaSearch);
                 }
             }
-        }catch (SAXException | ParserConfigurationException | IOException  e) {
+        }catch (SAXException | ParserConfigurationException | IOException | ServiceException e) {
            e.printStackTrace();
             // log
         }
@@ -47,7 +53,7 @@ public class GoodsServiceImpl implements GoodsService {
                     return daoGoods.add(goods);
                 }
             }
-        }catch (ServiceException | ParserConfigurationException | IOException | SAXException | TransformerException e) {
+        }catch (ParserConfigurationException | IOException | SAXException | TransformerException | ServiceException e) {
             e.printStackTrace();
             // log
         }

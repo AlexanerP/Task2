@@ -4,7 +4,15 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * @author Alexander Pishchala
+ *
+ * This class is the entity 'Smoothing Iron' and extends the Goods class.
+ * Here are the main characteristics of a smoothing iron type goods.
+ */
 public class SmoothingIron extends Goods implements Serializable {
+
+    private static final long serialVersionUID = -4194331406714804089L;
 
     private int maxTemperature;
     private int countMode;

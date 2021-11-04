@@ -16,6 +16,11 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.IOException;
 
+/**
+ * @author Alexander Pishchala
+ *
+ * This xml file update class. It adds a new goods to the xml file.
+ */
 public class UpdateXML {
 
     private Constant constant = new Constant();

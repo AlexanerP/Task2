@@ -1,5 +1,10 @@
 package com.epam.task2.service;
 
+/**
+ * @author Alexander Pishchala
+ *
+ * This is the Exception class of the service package.
+ */
 public class ServiceException extends Exception {
 
     public ServiceException() {

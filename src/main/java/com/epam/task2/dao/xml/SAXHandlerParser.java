@@ -12,6 +12,12 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Alexander Pishchala
+ *
+ * This is the Handler class. The parsing logic is described here. When the data is received, an object is
+ * formed and added to the 'GoodsRepository'.
+ */
 public class SAXHandlerParser extends DefaultHandler{
 
     private final String TYPE_TAG = Constant.TYPE_TAG;

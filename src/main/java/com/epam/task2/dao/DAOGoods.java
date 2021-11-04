@@ -8,7 +8,7 @@ package com.epam.task2.dao;
  */
 
 import com.epam.task2.entity.Goods;
-import com.epam.task2.entity.criteria.CriteriaSearch;
+import com.epam.task2.entity.criteria.Criteria;
 import com.epam.task2.service.ServiceException;
 import org.xml.sax.SAXException;
 
@@ -19,7 +19,7 @@ import java.util.List;
 
 public interface DAOGoods {
 
-    List<Goods> find(CriteriaSearch criteriaSearch) throws IOException, SAXException, ParserConfigurationException, ServiceException;
+    List<Goods> find(Criteria criteria) throws IOException, SAXException, ParserConfigurationException, ServiceException;
 
     boolean add(Goods goods) throws ParserConfigurationException, IOException, SAXException, TransformerException, ServiceException;
 

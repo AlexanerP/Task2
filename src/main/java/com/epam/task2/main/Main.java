@@ -4,7 +4,7 @@ import com.epam.task2.dao.DAOFactory;
 import com.epam.task2.dao.Write;
 import com.epam.task2.entity.Goods;
 import com.epam.task2.entity.Refrigerator;
-import com.epam.task2.entity.criteria.CriteriaSearch;
+import com.epam.task2.entity.criteria.Criteria;
 import com.epam.task2.service.GoodsService;
 import com.epam.task2.service.ServiceFactory;
 import org.xml.sax.SAXException;
@@ -29,14 +29,14 @@ public class Main {
         Write outConsole = DAOFactory.getInstance().getWrite();
         GoodsService service = ServiceFactory.getInstance().getGoodsService();
 
-        CriteriaSearch criteriaSearch = new CriteriaSearch();
+        Criteria criteria = new Criteria();
         /**
          * Step one.
          */
         String firstNameGoods = "LG";
-        criteriaSearch.add(firstNameGoods);
+        criteria.add(firstNameGoods);
 
-        List<Goods> goodsResult = service.findGoods(criteriaSearch);
+        List<Goods> goodsResult = service.findGoods(criteria);
         /**
          * Output the result to the console
          */
@@ -52,8 +52,8 @@ public class Main {
         outConsole.write("\n\n************************************\n\n");
 
         String secondNameGoods = "Indesit";
-        criteriaSearch.add(secondNameGoods);
-        goodsResult = service.findGoods(criteriaSearch);
+        criteria.add(secondNameGoods);
+        goodsResult = service.findGoods(criteria);
 
         /**
          * Output the result to the console

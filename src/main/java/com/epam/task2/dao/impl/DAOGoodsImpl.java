@@ -6,7 +6,7 @@ import com.epam.task2.dao.GoodsRepository;
 import com.epam.task2.dao.xml.SAXParserXML;
 import com.epam.task2.dao.xml.UpdateXML;
 import com.epam.task2.entity.Goods;
-import com.epam.task2.entity.criteria.CriteriaSearch;
+import com.epam.task2.entity.criteria.Criteria;
 import com.epam.task2.service.ServiceException;
 import org.xml.sax.SAXException;
 
@@ -28,13 +28,13 @@ public class DAOGoodsImpl implements DAOGoods {
     private UpdateXML updateXML = DAOFactory.getInstance().getWriteXML();
 
     @Override
-    public List<Goods> find(CriteriaSearch criteriaSearch) throws IOException, SAXException, ParserConfigurationException, ServiceException {
+    public List<Goods> find(Criteria criteria) throws IOException, SAXException, ParserConfigurationException, ServiceException {
         saxParserXML = DAOFactory.getInstance().getSaxParserXML();
         saxParserXML.startParsing();
         List<Goods> goodsList = new ArrayList<>();
         List<Goods> repositoryGoodsList = goodsRepository.getRepositoryGoodsList();
         for (Goods goods : repositoryGoodsList) {
-            for (String lineSearchWord : criteriaSearch.getListSearchWord()) {
+            for (String lineSearchWord : criteria.getListSearchWord()) {
                 if (goods.toString().contains(lineSearchWord)) {
                     long idGoods = goods.getIdGoods();
                     if (isRedial(idGoods, goodsList)) {

@@ -3,7 +3,7 @@ package com.epam.task2.service.impl;
 import com.epam.task2.dao.DAOFactory;
 import com.epam.task2.dao.DAOGoods;
 import com.epam.task2.entity.Goods;
-import com.epam.task2.entity.criteria.CriteriaSearch;
+import com.epam.task2.entity.criteria.Criteria;
 import com.epam.task2.service.GoodsService;
 import com.epam.task2.service.ServiceException;
 import com.epam.task2.service.Validator;
@@ -29,11 +29,11 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public List<Goods> findGoods(CriteriaSearch criteriaSearch) {
+    public List<Goods> findGoods(Criteria criteria) {
         try {
-            if (!(criteriaSearch == null)) {
-                if(!criteriaSearch.getListSearchWord().isEmpty()) {
-                    return daoGoods.find(criteriaSearch);
+            if (!(criteria == null)) {
+                if(!criteria.getListSearchWord().isEmpty()) {
+                    return daoGoods.find(criteria);
                 }
             }
         }catch (SAXException | ParserConfigurationException | IOException | ServiceException e) {

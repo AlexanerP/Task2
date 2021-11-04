@@ -6,20 +6,20 @@ import java.util.*;
 /**
  * @author Alexander Pishchala
  *
- * This is the class of the entity 'CriteriaSearch'.
+ * This is the class of the entity 'Criteria'.
  * Here are the main search criteria by which products will be searched.
  */
-public class CriteriaSearch implements Serializable {
+public class Criteria implements Serializable {
 
     private static final long serialVersionUID = -7696742141914073282L;
 
     private String searchWord;
     private List<String> listSearchWord = new ArrayList<>();
 
-    public CriteriaSearch() {
+    public Criteria() {
     }
 
-    public CriteriaSearch(String searchWord) {
+    public Criteria(String searchWord) {
         this.searchWord = searchWord;
         add(searchWord);
     }
@@ -49,7 +49,7 @@ public class CriteriaSearch implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CriteriaSearch that = (CriteriaSearch) o;
+        Criteria that = (Criteria) o;
         return Objects.equals(searchWord, that.searchWord) &&
                 Objects.equals(listSearchWord, that.listSearchWord);
     }
@@ -62,7 +62,7 @@ public class CriteriaSearch implements Serializable {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("CriteriaSearch{").append("listSearchWord=").append(listSearchWord);
+        stringBuilder.append("Criteria{").append("listSearchWord=").append(listSearchWord);
         return stringBuilder.toString();
     }
 }

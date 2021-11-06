@@ -51,7 +51,7 @@ public class Main {
          */
         outConsole.write("\n\n************************************\n\n");
 
-        String secondNameGoods = "Indesit";
+        String secondNameGoods = "AlG";
         criteria.add(secondNameGoods);
         goodsResult = service.findGoods(criteria);
 

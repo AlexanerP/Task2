@@ -1,5 +1,7 @@
 package com.epam.task2.dao.xml;
 
+import com.epam.task2.dao.DAOFactory;
+import com.epam.task2.dao.GoodsRepository;
 import com.epam.task2.entity.Goods;
 import com.epam.task2.entity.Refrigerator;
 import com.epam.task2.entity.SmoothingIron;
@@ -14,7 +16,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Alexander Pishchala
@@ -25,92 +29,123 @@ public class UpdateXML {
 
     private Constant constant = new Constant();
     private final String TYPE_TAG = Constant.TYPE_TAG;
-    private final String ITEM_TAG = Constant.ITEM_TAG;
-    private final String ITEM_ID_TAG = Constant.ITEM_ID_TAG;
+    private final String ID_TAG = Constant.ID_TAG;
     private final String COMPANY_TAG = Constant.COMPANY_TAG;
-    private final String TYPE_REFRIGERATOR = Constant.TYPE_REFRIGERATOR;
-    private final String TYPE_SMOOTHING_IRON = Constant.TYPE_SMOOTHING_IRON;
-    private final String TYPE_UNKNOWN = Constant.TYPE_UNKNOWN;
     private final String NAME_TAG = Constant.NAME_TAG;
     private final String PRICE_TAG = Constant.PRICE_TAG;
     private final String COUNT_MODE_TAG = Constant.COUNT_MODE_TAG;
     private final String MAX_TEMPERATURE_TAG = Constant.MAX_TEMPERATURE_TAG;
     private final String VOLUME_FREEZER_TAG = Constant.VOLUME_FREEZER_TAG;
     private final String VOLUME_NOT_FREEZER_TAG = Constant.VOLUME_NOT_FREEZER_TAG;
+    private String TYPE_GOODS_REFRIGERATOR = Constant.TYPE_GOODS_REFRIGERATOR;
+    private String TYPE_GOODS_SMOOTHING_IRON = Constant.TYPE_GOODS_SMOOTHING_IRON;
+    private final String N_GOODS_TAG = Constant.N_GOODS_TAG;
+    private final String ITEMS_TAG = Constant.ITEMS_TAG;
+    private static final String XMLN_N = Constant.XMLN_N;
+    private static final String XMLN_XSI = Constant.XMLN_XSI;
+    private static final String XSI_SCHEMA = Constant.XSI_SCHEMA;
+    private static final String XMLN_N_VALUE = Constant.XMLN_N_VALUE;
+    private static final String XMLN_XSI_VALUE = Constant.XMLN_XSI_VALUE;
+    private static final String XSI_SCHEMA_VALUE = Constant.XSI_SCHEMA_VALUE;
+
+    private String TYPE_ELEMENT_REFRIGERATOR = Constant.TYPE_ELEMENT_REFRIGERATOR;
+    private String TYPE_ELEMENT_SMOOTHING_IRON = Constant.TYPE_ELEMENT_SMOOTHING_IRON;
 
     public boolean update(Goods goods) throws ParserConfigurationException, IOException, SAXException, TransformerException, ServiceException {
 
         String file = getPathFile();
+        ParsingGoodsFile parsingGoodsFile = DAOFactory.getInstance().getSaxParserXML();
+        GoodsRepository goodsRepository = GoodsRepository.getInstance();
+
+        parsingGoodsFile.startParsing();
+        List<Goods> goodsList = goodsRepository.getRepositoryGoodsList();
+        goodsList.add(goods);
+
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-        Document document = documentBuilder.parse(file);
+        factory.setNamespaceAware(true);
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document document = builder.newDocument();
 
-        Element root = document.getDocumentElement();
+        Element goodsElement = document.createElement(N_GOODS_TAG);
 
-        Element newGoods = document.createElement(ITEM_TAG);
-        newGoods.setAttribute(ITEM_ID_TAG, goods.getIdGoods() + "");
+        goodsElement.setAttribute(XMLN_N, XMLN_N_VALUE);
+        goodsElement.setAttribute(XMLN_XSI, XMLN_XSI_VALUE);
+        goodsElement.setAttribute(XSI_SCHEMA, XSI_SCHEMA_VALUE);
+        Element itemsElement = document.createElement(ITEMS_TAG);
 
-        Element type = document.createElement(TYPE_TAG);
-        type.appendChild(document.createTextNode(goods.getType()));
-        newGoods.appendChild(type);
+        for (Goods product : goodsList) {
+            Element typeGoodsElement = null;
+            if (product.getType().equalsIgnoreCase(TYPE_GOODS_REFRIGERATOR)) {
+                typeGoodsElement = document.createElement(TYPE_ELEMENT_REFRIGERATOR);
+            } else if (product.getType().equalsIgnoreCase(TYPE_GOODS_SMOOTHING_IRON)) {
+                typeGoodsElement = document.createElement(TYPE_ELEMENT_SMOOTHING_IRON);
+            }
+            Element type = document.createElement(TYPE_TAG);
+            type.appendChild(document.createTextNode(product.getType()));
+            typeGoodsElement.appendChild(type);
 
-        Element company = document.createElement(COMPANY_TAG);
-        company.appendChild(document.createTextNode(goods.getCompany()));
-        newGoods.appendChild(company);
+            Element id = document.createElement(ID_TAG);
+            id.appendChild(document.createTextNode(product.getIdGoods() + ""));
+            typeGoodsElement.appendChild(id);
 
-        Element name = document.createElement(NAME_TAG);
-        name.appendChild(document.createTextNode(goods.getName()));
-        newGoods.appendChild(name);
+            Element company = document.createElement(COMPANY_TAG);
+            company.appendChild(document.createTextNode(product.getCompany()));
+            typeGoodsElement.appendChild(company);
 
-        Element price = document.createElement(PRICE_TAG);
-        price.appendChild(document.createTextNode(goods.getPrice() + ""));
-        newGoods.appendChild(price);
+            Element name = document.createElement(NAME_TAG);
+            name.appendChild(document.createTextNode(product.getName()));
+            typeGoodsElement.appendChild(name);
 
-        if(goods.getType().equalsIgnoreCase(TYPE_REFRIGERATOR)) {
-            addRefrigerator(goods, newGoods, document);
-        } else if (goods.getType().equalsIgnoreCase(TYPE_SMOOTHING_IRON)) {
-            addSmoothingIron(goods, newGoods, document);
-        } else {
-            Element unknown = document.createElement(TYPE_UNKNOWN);
-            unknown.appendChild(document.createTextNode(TYPE_UNKNOWN));
-            newGoods.appendChild(unknown);
+            Element price = document.createElement(PRICE_TAG);
+            price.appendChild(document.createTextNode(product.getPrice() + ""));
+            typeGoodsElement.appendChild(price);
+
+            if (product.getType().equalsIgnoreCase(TYPE_GOODS_REFRIGERATOR)) {
+                addRefrigerator(product, typeGoodsElement, document, goodsElement);
+            } else if (product.getType().equalsIgnoreCase(TYPE_GOODS_SMOOTHING_IRON)) {
+                addSmoothingIron(product, typeGoodsElement, document, goodsElement);
+            }
         }
 
-        root.appendChild(newGoods);
+        goodsElement.appendChild(itemsElement);
+        document.appendChild(goodsElement);
 
+        TransformerFactory trans = TransformerFactory.newInstance();
+
+        Transformer transformer = trans.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         DOMSource source = new DOMSource(document);
-
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-        StreamResult result = new StreamResult(file);
-        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-
+        StreamResult result = new StreamResult(new FileWriter(file));
         transformer.transform(source, result);
         return true;
     }
 
-    private void addRefrigerator(Goods goods, Element newGoods, Document document) {
+    private void addRefrigerator(Goods goods, Element typeGoodsElement, Document document, Element endElement) {
         Refrigerator refrigerator = (Refrigerator) goods;
 
         Element volumeFreezer = document.createElement(VOLUME_FREEZER_TAG);
         volumeFreezer.appendChild(document.createTextNode(refrigerator.getVolumeFreezer() + ""));
-        newGoods.appendChild(volumeFreezer);
+        typeGoodsElement.appendChild(volumeFreezer);
 
         Element volumeNotFreezer = document.createElement(VOLUME_NOT_FREEZER_TAG);
         volumeNotFreezer.appendChild(document.createTextNode(refrigerator.getVolumeNotFreezer() + ""));
-        newGoods.appendChild(volumeNotFreezer);
+        typeGoodsElement.appendChild(volumeNotFreezer);
+
+        endElement.appendChild(typeGoodsElement);
     }
 
-    private void addSmoothingIron(Goods goods, Element newGoods, Document document) {
+    private void addSmoothingIron(Goods goods, Element typeGoodsElement, Document document, Element endElement) {
         SmoothingIron smoothingIron = (SmoothingIron) goods;
-
-        Element maxTemperature = document.createElement(MAX_TEMPERATURE_TAG);
-        maxTemperature.appendChild(document.createTextNode(smoothingIron.getMaxTemperature() + ""));
-        newGoods.appendChild(maxTemperature);
 
         Element countMode = document.createElement(COUNT_MODE_TAG);
         countMode.appendChild(document.createTextNode(smoothingIron.getCountMode() + ""));
-        newGoods.appendChild(countMode);
+        typeGoodsElement.appendChild(countMode);
+
+        Element maxTemperature = document.createElement(MAX_TEMPERATURE_TAG);
+        maxTemperature.appendChild(document.createTextNode(smoothingIron.getMaxTemperature() + ""));
+        typeGoodsElement.appendChild(maxTemperature);
+
+        endElement.appendChild(typeGoodsElement);
     }
 
     private String getPathFile() throws ServiceException {

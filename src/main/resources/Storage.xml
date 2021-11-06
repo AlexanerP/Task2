@@ -1,35 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Storage>
-    <item id="1">
-        <type>Smoothing Iron</type>
-        <company>LG</company>
-        <name>S153.I8</name>
-        <price>19.9</price>
-        <countMode>5</countMode>
-        <maxTemperature>570</maxTemperature>
-    </item>
-    <item id="2">
-        <type>Refrigerator</type>
-        <company>Indesit</company>
-        <name>MAF 3000</name>
-        <price>1966.2</price>
-        <volumeFreezer>15</volumeFreezer>
-        <volumeNotFreezer>5</volumeNotFreezer>
-    </item>
-    <item id="3">
-        <type>Refrigerator</type>
-        <company>HOLAND</company>
-        <name>PIT 5478.S</name>
-        <price>300</price>
-        <volumeFreezer>25</volumeFreezer>
-        <volumeNotFreezer>15</volumeNotFreezer>
-    </item>
-    <item id="4">
-        <type>Smoothing Iron</type>
-        <company>LG</company>
-        <name>F35.S8-N1</name>
-        <price>59.9</price>
-        <countMode>3</countMode>
-        <maxTemperature>200</maxTemperature>
-    </item>
-</Storage>
+<n:goods xmlns:n="http://www.epam.by/goods" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.epam.by/goods schema.xsd">
+        <items>
+            <smoothing-iron>
+                <type>Smoothing Iron</type>
+                <id>1</id>
+                <company>LG</company>
+                <name>S153.I8</name>
+                <price>19.9</price>
+                <count-mode>5</count-mode>
+                <max-temperature>570</max-temperature>
+            </smoothing-iron>
+            <refrigerator>
+                <type>Refrigerator</type>
+                <id>1</id>
+                <company>Indesit</company>
+                <name>MAF 3000</name>
+                <price>1966.2</price>
+                <volume-freezer>15</volume-freezer>
+                <volume-not-freezer>5</volume-not-freezer>
+            </refrigerator>
+            <smoothing-iron>
+                <type>Smoothing Iron</type>
+                <id>3</id>
+                <company>AlG</company>
+                <name>S1INNS 53.I8</name>
+                <price>30</price>
+                <count-mode>2</count-mode>
+                <max-temperature>170</max-temperature>
+            </smoothing-iron>
+            <refrigerator>
+                <type>Refrigerator</type>
+                <id>4</id>
+                <company>Mi</company>
+                <name>Son S55</name>
+                <price>423</price>
+                <volume-freezer>5</volume-freezer>
+                <volume-not-freezer>15</volume-not-freezer>
+            </refrigerator>
+            <smoothing-iron>
+                <type>Smoothing Iron</type>
+                <id>5</id>
+                <company>Honol</company>
+                <name>Honol-3000</name>
+                <price>230</price>
+                <count-mode>3</count-mode>
+                <max-temperature>250</max-temperature>
+            </smoothing-iron>
+            <refrigerator>
+                <type>Refrigerator</type>
+                <id>6</id>
+                <company>Air</company>
+                <name>Free air</name>
+                <price>199.99</price>
+                <volume-freezer>2</volume-freezer>
+                <volume-not-freezer>2</volume-not-freezer>
+            </refrigerator>
+        </items>
+</n:goods>

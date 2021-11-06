@@ -10,19 +10,27 @@ public class Constant {
     private final String FILE_NAME = "Storage.xml";
 
     static final String TYPE_TAG = "type";
-    static final String ITEM_TAG = "item";
-    static final String ITEM_ID_TAG = "id";
+    static final String ID_TAG = "id";
     static final String COMPANY_TAG = "company";
     static final String NAME_TAG = "name";
     static final String PRICE_TAG = "price";
-    static final String COUNT_MODE_TAG = "countMode";
-    static final String MAX_TEMPERATURE_TAG = "maxTemperature";
-    static final String VOLUME_FREEZER_TAG = "volumeFreezer";
-    static final String VOLUME_NOT_FREEZER_TAG = "volumeNotFreezer";
+    static final String COUNT_MODE_TAG = "count-mode";
+    static final String MAX_TEMPERATURE_TAG = "max-temperature";
+    static final String VOLUME_FREEZER_TAG = "volume-freezer";
+    static final String VOLUME_NOT_FREEZER_TAG = "volume-not-freezer";
+    static final String TYPE_GOODS_REFRIGERATOR = "Refrigerator";
+    static final String TYPE_GOODS_SMOOTHING_IRON = "Smoothing Iron";
+    static final String N_GOODS_TAG = "n:goods";
+    static final String ITEMS_TAG = "items";
+    static final String XMLN_N = "xmlns:n";
+    static final String XMLN_XSI = "xmlns:xsi";
+    static final String XSI_SCHEMA = "xsi:schemaLocation";
+    static final String XMLN_N_VALUE = "http://www.epam.by/goods";
+    static final String XMLN_XSI_VALUE = "http://www.w3.org/2001/XMLSchema-instance";
+    static final String XSI_SCHEMA_VALUE = "http://www.epam.by/goods schema.xsd";
 
-    static final String TYPE_REFRIGERATOR = "refrigerator";
-    static final String TYPE_SMOOTHING_IRON = "Smoothing iron";
-    static final String TYPE_UNKNOWN = "Unknown";
+    static final String TYPE_ELEMENT_REFRIGERATOR = "refrigerator";
+    static final String TYPE_ELEMENT_SMOOTHING_IRON = "smoothing-iron";
 
 
     public String getFILE_NAME() {

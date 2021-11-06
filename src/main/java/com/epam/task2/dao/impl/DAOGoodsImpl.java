@@ -3,7 +3,7 @@ package com.epam.task2.dao.impl;
 import com.epam.task2.dao.DAOFactory;
 import com.epam.task2.dao.DAOGoods;
 import com.epam.task2.dao.GoodsRepository;
-import com.epam.task2.dao.xml.SAXParserXML;
+import com.epam.task2.dao.xml.ParsingGoodsFile;
 import com.epam.task2.dao.xml.UpdateXML;
 import com.epam.task2.entity.Goods;
 import com.epam.task2.entity.criteria.Criteria;
@@ -23,14 +23,14 @@ import java.util.List;
  */
 public class DAOGoodsImpl implements DAOGoods {
 
-    private SAXParserXML saxParserXML;
+    private ParsingGoodsFile parsingGoodsFile;
     private GoodsRepository goodsRepository = GoodsRepository.getInstance();
     private UpdateXML updateXML = DAOFactory.getInstance().getWriteXML();
 
     @Override
     public List<Goods> find(Criteria criteria) throws IOException, SAXException, ParserConfigurationException, ServiceException {
-        saxParserXML = DAOFactory.getInstance().getSaxParserXML();
-        saxParserXML.startParsing();
+        parsingGoodsFile = DAOFactory.getInstance().getSaxParserXML();
+        parsingGoodsFile.startParsing();
         List<Goods> goodsList = new ArrayList<>();
         List<Goods> repositoryGoodsList = goodsRepository.getRepositoryGoodsList();
         for (Goods goods : repositoryGoodsList) {
@@ -48,8 +48,7 @@ public class DAOGoodsImpl implements DAOGoods {
 
     @Override
     public boolean add(Goods goods) throws ParserConfigurationException, IOException, SAXException, TransformerException, ServiceException {
-        updateXML.update(goods);
-        return true;
+        return updateXML.update(goods);
     }
 
     private boolean isRedial(long id, List<Goods> goods) {

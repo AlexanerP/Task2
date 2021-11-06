@@ -2,15 +2,12 @@ package com.epam.task2.dao.xml;
 
 import com.epam.task2.dao.GoodsRepository;
 import org.xml.sax.helpers.DefaultHandler;
-import com.epam.task2.entity.Goods;
 import com.epam.task2.entity.Refrigerator;
 import com.epam.task2.entity.SmoothingIron;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Alexander Pishchala
@@ -21,11 +18,8 @@ import java.util.List;
 public class SAXHandlerParser extends DefaultHandler{
 
     private final String TYPE_TAG = Constant.TYPE_TAG;
-    private final String ITEM_TAG = Constant.ITEM_TAG;
-    private final String ITEM_ID_TAG = Constant.ITEM_ID_TAG;
+    private final String ID_TAG = Constant.ID_TAG;
     private final String COMPANY_TAG = Constant.COMPANY_TAG;
-    private final String TYPE_REFRIGERATOR = Constant.TYPE_REFRIGERATOR;
-    private final String TYPE_SMOOTHING_IRON = Constant.TYPE_SMOOTHING_IRON;
     private final String NAME_TAG = Constant.NAME_TAG;
     private final String PRICE_TAG = Constant.PRICE_TAG;
     private final String COUNT_MODE_TAG = Constant.COUNT_MODE_TAG;
@@ -33,12 +27,15 @@ public class SAXHandlerParser extends DefaultHandler{
     private final String VOLUME_FREEZER_TAG = Constant.VOLUME_FREEZER_TAG;
     private final String VOLUME_NOT_FREEZER_TAG = Constant.VOLUME_NOT_FREEZER_TAG;
 
+    private static final String TYPE_ELEMENT_REFRIGERATOR = Constant.TYPE_ELEMENT_REFRIGERATOR;
+    private static final String TYPE_ELEMENT_SMOOTHING_IRON = Constant.TYPE_ELEMENT_SMOOTHING_IRON;
+
     private final String REGEX_NUMBER = "^[0-9]*[.,]?[0-9]+$";
 
     private String currentElement;
 
     private long idGoods;
-    private String name, type, company;
+    private String name, type, company, typeGoods;
     private BigDecimal price;
     private int countMode, maxTemperature;
     private double volumeFreezer, volumeNotFreezer;
@@ -48,25 +45,14 @@ public class SAXHandlerParser extends DefaultHandler{
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
             currentElement = qName;
-            switch (currentElement) {
-                case ITEM_TAG:
-                    if (isNumber(attributes.getValue(ITEM_ID_TAG), REGEX_NUMBER)) {
-                        idGoods = Long.parseLong(attributes.getValue(ITEM_ID_TAG));
-                    }
-                    break;
-            }
         }
 
         @Override
         public void endElement(String uri, String localName, String qName) throws SAXException {
-            if(qName.equalsIgnoreCase(ITEM_TAG)) {
-                if(type.equalsIgnoreCase(TYPE_REFRIGERATOR)) {
-                    goodsRepository.add(new Refrigerator(idGoods, company, name, type, price, volumeFreezer, volumeNotFreezer));
-                } else if(type.equalsIgnoreCase(TYPE_SMOOTHING_IRON)) {
-                    goodsRepository.add(new SmoothingIron(idGoods, company, name, type, price, maxTemperature, countMode));
-                } else {
-                    goodsRepository.add(new Goods(idGoods, company, name, type, price));
-                }
+            if(qName.equals(TYPE_ELEMENT_REFRIGERATOR)) {
+                goodsRepository.add(new Refrigerator(idGoods, company, name, type, price, volumeFreezer, volumeNotFreezer));
+            } else if(qName.equals(TYPE_ELEMENT_SMOOTHING_IRON)) {
+                goodsRepository.add(new SmoothingIron(idGoods, company, name, type, price, maxTemperature, countMode));
             }
         }
 
@@ -79,11 +65,16 @@ public class SAXHandlerParser extends DefaultHandler{
             }
 
             switch (currentElement) {
-                case COMPANY_TAG:
-                    company = text;
-                    break;
                 case TYPE_TAG:
                     type = text;
+                    break;
+                case ID_TAG:
+                    if (isNumber(text, REGEX_NUMBER)) {
+                        idGoods = Long.valueOf(text);
+                    }
+                    break;
+                case COMPANY_TAG:
+                    company = text;
                     break;
                 case NAME_TAG:
                     name = text;

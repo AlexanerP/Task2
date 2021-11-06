@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.epam.by/goods"
+        xmlns:tns="http://www.epam.by/goods">
+
+    <element name="goods">
+        <complexType>
+            <sequence>
+                <element name="items">
+                    <complexType>
+                        <sequence>
+                            <choice minOccurs="0" maxOccurs="unbounded">
+                                <element name="smoothing-iron" type="tns:smoothing-iron"/>
+                                <element name="refrigerator" type="tns:refrigerator"/>
+                            </choice>
+                        </sequence>
+                    </complexType>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+
+    <complexType name="smoothing-iron">
+        <sequence>
+            <element name="type" type="string"/>
+            <element name="id" type="long"/>
+            <element name="company" type="string"/>
+            <element name="name" type="string"/>
+            <element name="price" type="double"/>
+            <element name="count-mode" type="int"/>
+            <element name="max-temperature" type="int"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="refrigerator">
+        <sequence>
+            <element name="type" type="string"/>
+            <element name="id" type="long"/>
+            <element name="company" type="string"/>
+            <element name="name" type="string"/>
+            <element name="price" type="double"/>
+            <element name="volume-freezer" type="double"/>
+            <element name="volume-not-freezer" type="double"/>
+        </sequence>
+    </complexType>
+</schema>

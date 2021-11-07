@@ -157,4 +157,5 @@ public class UpdateXML {
         StringBuffer path = new StringBuffer(pathFile);
         return path.deleteCharAt(0).toString();
     }
+
 }

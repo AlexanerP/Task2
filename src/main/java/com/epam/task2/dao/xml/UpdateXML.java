@@ -37,19 +37,19 @@ public class UpdateXML {
     private final String MAX_TEMPERATURE_TAG = Constant.MAX_TEMPERATURE_TAG;
     private final String VOLUME_FREEZER_TAG = Constant.VOLUME_FREEZER_TAG;
     private final String VOLUME_NOT_FREEZER_TAG = Constant.VOLUME_NOT_FREEZER_TAG;
-    private String TYPE_GOODS_REFRIGERATOR = Constant.TYPE_GOODS_REFRIGERATOR;
-    private String TYPE_GOODS_SMOOTHING_IRON = Constant.TYPE_GOODS_SMOOTHING_IRON;
+    private final String TYPE_GOODS_REFRIGERATOR = Constant.TYPE_GOODS_REFRIGERATOR;
+    private final String TYPE_GOODS_SMOOTHING_IRON = Constant.TYPE_GOODS_SMOOTHING_IRON;
     private final String N_GOODS_TAG = Constant.N_GOODS_TAG;
     private final String ITEMS_TAG = Constant.ITEMS_TAG;
-    private static final String XMLN_N = Constant.XMLN_N;
-    private static final String XMLN_XSI = Constant.XMLN_XSI;
-    private static final String XSI_SCHEMA = Constant.XSI_SCHEMA;
-    private static final String XMLN_N_VALUE = Constant.XMLN_N_VALUE;
-    private static final String XMLN_XSI_VALUE = Constant.XMLN_XSI_VALUE;
-    private static final String XSI_SCHEMA_VALUE = Constant.XSI_SCHEMA_VALUE;
+    private final String XMLN_N = Constant.XMLN_N;
+    private final String XMLN_XSI = Constant.XMLN_XSI;
+    private final String XSI_SCHEMA = Constant.XSI_SCHEMA;
+    private final String XMLN_N_VALUE = Constant.XMLN_N_VALUE;
+    private final String XMLN_XSI_VALUE = Constant.XMLN_XSI_VALUE;
+    private final String XSI_SCHEMA_VALUE = Constant.XSI_SCHEMA_VALUE;
 
-    private String TYPE_ELEMENT_REFRIGERATOR = Constant.TYPE_ELEMENT_REFRIGERATOR;
-    private String TYPE_ELEMENT_SMOOTHING_IRON = Constant.TYPE_ELEMENT_SMOOTHING_IRON;
+    private final String TYPE_ELEMENT_REFRIGERATOR = Constant.TYPE_ELEMENT_REFRIGERATOR;
+    private final String TYPE_ELEMENT_SMOOTHING_IRON = Constant.TYPE_ELEMENT_SMOOTHING_IRON;
 
     public boolean update(Goods goods) throws ParserConfigurationException, IOException, SAXException, TransformerException, ServiceException {
 
@@ -73,6 +73,22 @@ public class UpdateXML {
         goodsElement.setAttribute(XSI_SCHEMA, XSI_SCHEMA_VALUE);
         Element itemsElement = document.createElement(ITEMS_TAG);
 
+        addAllGoods(goodsList, document, itemsElement);
+
+        goodsElement.appendChild(itemsElement);
+        document.appendChild(goodsElement);
+
+        TransformerFactory trans = TransformerFactory.newInstance();
+
+        Transformer transformer = trans.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        DOMSource source = new DOMSource(document);
+        StreamResult result = new StreamResult(new FileWriter(file));
+        transformer.transform(source, result);
+        return true;
+    }
+
+    private void addAllGoods(List<Goods> goodsList, Document document, Element itemsElement) {
         for (Goods product : goodsList) {
             Element typeGoodsElement = null;
             if (product.getType().equalsIgnoreCase(TYPE_GOODS_REFRIGERATOR)) {
@@ -101,26 +117,14 @@ public class UpdateXML {
             typeGoodsElement.appendChild(price);
 
             if (product.getType().equalsIgnoreCase(TYPE_GOODS_REFRIGERATOR)) {
-                addRefrigerator(product, typeGoodsElement, document, goodsElement);
+                addRefrigerator(product, typeGoodsElement, document, itemsElement);
             } else if (product.getType().equalsIgnoreCase(TYPE_GOODS_SMOOTHING_IRON)) {
-                addSmoothingIron(product, typeGoodsElement, document, goodsElement);
+                addSmoothingIron(product, typeGoodsElement, document, itemsElement);
             }
         }
-
-        goodsElement.appendChild(itemsElement);
-        document.appendChild(goodsElement);
-
-        TransformerFactory trans = TransformerFactory.newInstance();
-
-        Transformer transformer = trans.newTransformer();
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        DOMSource source = new DOMSource(document);
-        StreamResult result = new StreamResult(new FileWriter(file));
-        transformer.transform(source, result);
-        return true;
     }
 
-    private void addRefrigerator(Goods goods, Element typeGoodsElement, Document document, Element endElement) {
+    private void addRefrigerator(Goods goods, Element typeGoodsElement, Document document, Element itemsElement) {
         Refrigerator refrigerator = (Refrigerator) goods;
 
         Element volumeFreezer = document.createElement(VOLUME_FREEZER_TAG);
@@ -131,10 +135,10 @@ public class UpdateXML {
         volumeNotFreezer.appendChild(document.createTextNode(refrigerator.getVolumeNotFreezer() + ""));
         typeGoodsElement.appendChild(volumeNotFreezer);
 
-        endElement.appendChild(typeGoodsElement);
+        itemsElement.appendChild(typeGoodsElement);
     }
 
-    private void addSmoothingIron(Goods goods, Element typeGoodsElement, Document document, Element endElement) {
+    private void addSmoothingIron(Goods goods, Element typeGoodsElement, Document document, Element itemsElement) {
         SmoothingIron smoothingIron = (SmoothingIron) goods;
 
         Element countMode = document.createElement(COUNT_MODE_TAG);
@@ -145,12 +149,12 @@ public class UpdateXML {
         maxTemperature.appendChild(document.createTextNode(smoothingIron.getMaxTemperature() + ""));
         typeGoodsElement.appendChild(maxTemperature);
 
-        endElement.appendChild(typeGoodsElement);
+        itemsElement.appendChild(typeGoodsElement);
     }
 
     private String getPathFile() throws ServiceException {
-            String pathFile = UpdateXML.class.getClassLoader().getResource(constant.getFILE_NAME()).getPath();
-            StringBuffer path = new StringBuffer(pathFile);
-            return path.deleteCharAt(0).toString();
-        }
+        String pathFile = UpdateXML.class.getClassLoader().getResource(constant.getFILE_NAME()).getPath();
+        StringBuffer path = new StringBuffer(pathFile);
+        return path.deleteCharAt(0).toString();
+    }
 }

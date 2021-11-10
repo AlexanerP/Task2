@@ -15,12 +15,13 @@ import java.io.IOException;
  *
  * This is the 'SAXParsingXML' class. It describes parsing a file.
  */
-public final class ParsingGoodsFile {
+public final class ParsingGoodsXML implements ParsingXML {
 
     private Constant constant = new Constant();
     private SAXHandlerParser handler = DAOFactory.getInstance().getHandler();
 
-    public void startParsing() throws SAXException, ParserConfigurationException, IOException, ServiceException{
+    @Override
+    public void startParsing() throws SAXException, ParserConfigurationException, IOException, ServiceException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser saxParser = factory.newSAXParser();
         XMLReader xmlReader = saxParser.getXMLReader();
@@ -29,7 +30,7 @@ public final class ParsingGoodsFile {
     }
 
     private String getPathFile() throws ServiceException {
-        String path = ParsingGoodsFile.class.getClassLoader().getResource(constant.getFILE_NAME()).getPath();
+        String path = ParsingGoodsXML.class.getClassLoader().getResource(constant.getFILE_NAME()).getPath();
         return path;
     }
 }

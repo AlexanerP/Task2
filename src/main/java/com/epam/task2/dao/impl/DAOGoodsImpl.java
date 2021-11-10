@@ -3,8 +3,7 @@ package com.epam.task2.dao.impl;
 import com.epam.task2.dao.DAOFactory;
 import com.epam.task2.dao.DAOGoods;
 import com.epam.task2.dao.GoodsRepository;
-import com.epam.task2.dao.xml.ParsingGoodsFile;
-import com.epam.task2.dao.xml.UpdateXML;
+import com.epam.task2.dao.xml.ParsingGoodsXML;
 import com.epam.task2.entity.Goods;
 import com.epam.task2.entity.criteria.Criteria;
 import com.epam.task2.service.ServiceException;
@@ -23,9 +22,9 @@ import java.util.List;
  */
 public class DAOGoodsImpl implements DAOGoods {
 
-    private ParsingGoodsFile parsingGoodsFile;
+    private ParsingGoodsXML parsingGoodsFile;
     private GoodsRepository goodsRepository = GoodsRepository.getInstance();
-    private UpdateXML updateXML = DAOFactory.getInstance().getWriteXML();
+    private Update updateXML = DAOFactory.getInstance().getWriteXML();
 
     @Override
     public List<Goods> find(Criteria criteria) throws IOException, SAXException, ParserConfigurationException, ServiceException {

@@ -3,8 +3,9 @@ package com.epam.task2.dao;
 import com.epam.task2.dao.impl.DAOGoodsImpl;
 import com.epam.task2.dao.impl.WriteToConsoleImpl;
 import com.epam.task2.dao.xml.SAXHandlerParser;
-import com.epam.task2.dao.xml.ParsingGoodsFile;
-import com.epam.task2.dao.xml.UpdateXML;
+import com.epam.task2.dao.xml.ParsingGoodsXML;
+import com.epam.task2.dao.xml.WriteGoodsXML;
+import com.epam.task2.dao.xml.WriteXML;
 
 /**
  * @author Alexander Pishchala
@@ -15,8 +16,8 @@ public class DAOFactory {
 
     private static DAOFactory instance = new DAOFactory();
     private static SAXHandlerParser handler = new SAXHandlerParser();
-    private static ParsingGoodsFile parsingGoodsFile = new ParsingGoodsFile();
-    private static UpdateXML writeXML = new UpdateXML();
+    private static ParsingGoodsXML parsingGoodsFile = new ParsingGoodsXML();
+    private static WriteXML writeXML = new WriteGoodsXML();
     private static DAOGoods daoGoods = new DAOGoodsImpl();
     private static Write write = new WriteToConsoleImpl();
 
@@ -28,7 +29,7 @@ public class DAOFactory {
         return handler;
     }
 
-    public ParsingGoodsFile getSaxParserXML() {
+    public ParsingGoodsXML getSaxParserXML() {
         return parsingGoodsFile;
     }
 
@@ -40,7 +41,7 @@ public class DAOFactory {
         return write;
     }
 
-    public UpdateXML getWriteXML() {
+    public WriteXML getWriteXML() {
         return writeXML;
     }
 }
